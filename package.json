@@ -1,0 +1,27 @@
+{
+  "name": "metatollapp",
+  "version": "1.0.0",
+  "description": "This is a demo project based on the semester project of the course \"Software Engineering\" - NTUA ECE",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spyrgkou/metatollapp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/spyrgkou/metatollapp/issues"
+  },
+  "homepage": "https://github.com/spyrgkou/metatollapp#readme",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "csvtojson": "^2.0.10",
+    "express": "^4.18.1",
+    "mongoose": "^6.4.3"
+  }
+}
