@@ -1,10 +1,7 @@
-const mongoose = require('mongoose');
 const Station = require('../models/stations');
-const dbconfig = require('../config/dbconfig');
 const csvtojson = require('csvtojson');
 
 module.exports = async (req, res) => {
-    mongoose.connect(dbconfig);
 	try {
         await Station.deleteMany();
         var arrayToInsert = [];
