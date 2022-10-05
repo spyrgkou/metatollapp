@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const dbconfig = require('../config/dbconfig');
-require('../app');
+require('../server');
 
 module.exports = async (req, res) => {
 	if (mongoose.connection.readyState === 1){

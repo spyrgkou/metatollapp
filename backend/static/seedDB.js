@@ -76,6 +76,39 @@ const stationsSeed = async() =>{
 //     }
 // }
 
+        // vehicleID,tagID,tagProvider,providerAbbr,licenseYear
+        // passID;timestamp;stationRef;vehicleRef;charge;;;;;;
+
+
+        // var counter = 0;
+        // const add10DaysPasses = async (counter) => {
+        //     for(j=counter;j<=counter+10;j++){
+        //         // counter++;
+        //         var passFilename =__dirname+'/../static/days/day'+j.toString()+'.csv';
+        //         await csvtojson().fromFile(passFilename).then(csvdata => {
+        //             for (var i=0; i<csvdata.length; i++){
+        //                 var oneRow = {
+        //                     passId: csvdata[i]["passID"],
+        //                     timeStamp: csvdata[i]["timestamp"],
+        //                     stationRef: csvdata[i]["stationRef"],
+        //                     vehicleRef: csvdata[i]["vehicleRef"],
+        //                     charge: csvdata[i]["charge"]
+        //                 };
+        //                 arrayToInsert.push(oneRow);
+        //             }
+        //         });
+        //     }
+        //     Pass.insertMany(arrayToInsert, (err, result)=>{
+        //         if (err) res.status(500).json({"Status":"Failed!"});
+        //         if (result) {
+        //             res.status(200).json({"Status":"OK"});
+        //         }
+        //     });
+        //     counter=j;
+        // }
+        // if (counter<50){setTimeout(add10DaysPasses(counter),1000);}
+        
+
 stationsSeed().then(() => {
     mongoose.connection.close();
 })

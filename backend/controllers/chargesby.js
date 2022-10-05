@@ -1,7 +1,6 @@
 const Pass = require('../models/passes');
 const Station = require('../models/stations');
-const Vehicle = require('../models/vehicles');
-const ISODateFromString = require('../helpers');
+const ISODateFromString = require('../helpers').ISODateFromString;
 
 module.exports = async (req, res) => {
     try {
@@ -13,20 +12,16 @@ module.exports = async (req, res) => {
 				RequestTimestamp: new Date().toISOString(),
 				PeriodFrom: ISODateFromString(req.params.date_from),
 				PeriodTo: ISODateFromString(req.params.date_to),
-				PPOList: await Promise.all(((await Station.distinct('stationProvider')).filter(s => s != req.params.op_ID))
+				PPOList: await Promise.all(((await Station.distinct('stationProvider')).filter(op => op != req.params.op_ID))
 					.map(
-						async s => ({
-							VisitingOperator: s,
-							PassesCost: (await Pass.find({
-								stationRef: {$in: await Station.distinct("stationId",{stationProvider: req.params.op_ID})},
-								vehicleRef: {$in: await Vehicle.distinct("vehicleId",{tagProvider: s})},
-								timeStamp: {$gte: ISODateFromString(req.params.date_from), $lt: ISODateFromString(req.params.date_to)}
-							})).map(q => q.charge).reduce((p,n) => p+n, 0).toFixed(2)
-							- (await Pass.find({
-								stationRef: {$in: await Station.distinct("stationId",{stationProvider: s})},
-								vehicleRef: {$in: await Vehicle.distinct("vehicleId",{tagProvider: req.params.op_ID})},
-								timeStamp: {$gte: ISODateFromString(req.params.date_from), $lt: ISODateFromString(req.params.date_to)}
-							})).map(q => q.charge).reduce((p,n) => p+n, 0).toFixed(2)
+						async op => ({
+							VisitingOperator: op,
+							PassesCost: ((await Pass.findPassesAnalysis(op, req.params.op_ID,
+								ISODateFromString(req.params.date_from),ISODateFromString(req.params.date_to)))
+								.map(q => q.charge).reduce((p,n) => p+n, 0)
+								- (await Pass.findPassesAnalysis( req.params.op_ID, op,
+								ISODateFromString(req.params.date_from),ISODateFromString(req.params.date_to)))
+								.map(q => q.charge).reduce((p,n) => p+n, 0)).toFixed(2)
 						})
 					)
 				)

@@ -8,4 +8,13 @@ const VehicleSchema = new mongoose.Schema({
     licenseYear: Number
 })
 
+VehicleSchema.statics.findTagProviderByVehicleId = async function(vehicleID) {
+    const operator = (await this.findOne({vehicleId: vehicleID})).tagProvider;
+    if (operator) {
+        return operator;
+    }else{
+        throw Error('stationId not found!');
+    }
+}
+
 module.exports = mongoose.model("Vehicle", VehicleSchema);
