@@ -9,6 +9,6 @@ const conn_params = {
 
 // const connection_string = 'mongodb://conn_params.host'+':'+conn_params.port+'/'+conn_params.db;
 // const connection_string = 'mongodb://'+conn_params.username+':'+conn_params.password+'@'+conn_params.host+':'+conn_params.port+'/'+conn_params.db;
-const connection_string = 'mongodb://localhost:27017/metatolldb';
+const connection_string = 'mongodb://mongo_db:27017/metatolldb';
 
 module.exports = connection_string;
