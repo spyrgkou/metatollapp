@@ -1,14 +1,16 @@
 const Pass = require('../models/passes');
 const Vehicle = require('../models/vehicles');
 const ISODateFromString = require('../helpers').ISODateFromString;
+const ExpressError = require('../errorHandler')
 
-module.exports = async (req, res) => {
+module.exports = async (req, res, next) => {
 	try {
         var queryResults = await Pass.findPassesAnalysis(req.params.op1_ID, req.params.op2_ID,
             ISODateFromString(req.params.date_from),ISODateFromString(req.params.date_to));
         
         if (Object.keys(queryResults).length === 0){
-            res.status(204).send("NO CONTENT");
+            // res.status(204).send("NO CONTENT");
+            next(new ExpressError("No content", 204));
         } else {
             res.status(200).json({
                 op1_ID: req.params.op1_ID,
@@ -28,6 +30,7 @@ module.exports = async (req, res) => {
             });
         }
 	} catch (error) {
-        res.status(500).json({"Status":error.message});
+        // res.status(500).json({"Status":error.message});
+        next(new ExpressError(error.message, 500));
 	}
 };

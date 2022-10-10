@@ -3,12 +3,13 @@ const Station = require('../models/stations');
 const Vehicle = require('../models/vehicles');
 const ISODateFromString = require('../helpers').ISODateFromString;
 
-module.exports = async (req, res) => {
+module.exports = async (req, res, next) => {
 	try {
         var queryResults = await Pass.findPassesPerStation(req.params.stationID, ISODateFromString(req.params.date_from),ISODateFromString(req.params.date_to));
         
         if (Object.keys(queryResults).length === 0){
-            res.status(204).send("NO CONTENT");
+            // res.status(204).send("NO CONTENT");
+            next(new ExpressError("No content", 204));
         } else {
             res.status(200).json({
                 Station: req.params.stationID,
@@ -30,6 +31,7 @@ module.exports = async (req, res) => {
             });
         }
 	} catch (error) {
-        res.status(500).json({"Status":error.message});
+        // res.status(500).json({"Status":error.message});
+        next(new ExpressError(error.message, 500));
 	}
 };

@@ -1,7 +1,7 @@
 const Station = require('../models/stations');
 const csvtojson = require('csvtojson');
 
-module.exports = async (req, res) => {
+module.exports = async (req, res, next) => {
 	try {
         await Station.deleteMany();
         var arrayToInsert = [];
@@ -23,6 +23,7 @@ module.exports = async (req, res) => {
             }
         });
 	} catch (error) {
-        res.status(500).json({"Status":"Something went wrong!"});
+        // res.status(500).json({"Status":"Something went wrong!"});
+        next(new ExpressError(error.message, 500));
 	}
 };

@@ -1,7 +1,7 @@
 const Pass = require('../models/passes');
 const ISODateFromString = require('../helpers').ISODateFromString;
 
-module.exports = async (req, res) => {
+module.exports = async (req, res, next) => {
 	try {
         let queryResultsOp1 = await Pass.findPassesAnalysis(req.params.op1_ID, req.params.op2_ID,
             ISODateFromString(req.params.date_from),ISODateFromString(req.params.date_to));
@@ -10,7 +10,8 @@ module.exports = async (req, res) => {
             ISODateFromString(req.params.date_from),ISODateFromString(req.params.date_to));
 
         if ((Object.keys(queryResultsOp1).length === 0)&&((Object.keys(queryResultsOp1).length === 0))){
-            res.status(204).send("NO CONTENT");
+            // res.status(204).send("NO CONTENT");
+            next(new ExpressError("No content", 204));
         } else {
             res.status(200).json({
                 op1_ID: req.params.op1_ID,
@@ -23,6 +24,7 @@ module.exports = async (req, res) => {
             });
         }
 	} catch (error) {
-        res.status(500).json({"Status":"Something went wrong!"});
+        // res.status(500).json({"Status":"Something went wrong!"});
+        next(new ExpressError(error.message, 500));
 	}
 };

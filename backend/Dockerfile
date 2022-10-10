@@ -12,4 +12,5 @@ EXPOSE 9103
 
 VOLUME ["/backend/node_modules"]
 
-CMD ["npm", "start"]
+# CMD ["npm", "start", "dev"]
+CMD ["npm", "run", "dev"]

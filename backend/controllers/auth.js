@@ -1,6 +1,7 @@
 const User = require('../models/users');
 const createToken = require('../helpers').createToken
 const jwt = require('jsonwebtoken');
+const redisClient = require('../config/redisConfig')
 
 module.exports.signup = async (req, res) => {
     const {username, password, role, name, abbrevation, email} = req.body;
@@ -14,8 +15,9 @@ module.exports.signup = async (req, res) => {
             token: token
         });
     }
-    catch(err){
-        res.status(500).send(err.message);
+    catch(error){
+        // res.status(500).send(err.message);
+        next(new ExpressError(error.message, 500));
     }
 }
 
@@ -34,15 +36,25 @@ module.exports.login_post = async (req, res) => {
                 token: await createToken(user._id) 
             });
         } else {
-            res.status(400).json({ message: "Login not succesful" });
+            // res.status(400).json({ message: "Login not succesful" });
+            next(new ExpressError("Login not succesful", 400));
         }
     }
-    catch(err){
-        res.status(400).json({errormessage: err.message});
+    catch(error){
+        // res.status(400).json({errormessage: err.message});
+        next(new ExpressError(error.message, 400));
     }
 }
 
-module.exports.logout = (req, res) => {
-    const {username, password} = req.body;
-    res.send('logout');
+module.exports.logout = async (req, res) => {
+    try{
+        const token = req.header('X-OBSERVATORY-AUTH');
+        // if (!token){ res.status(402).send("No user is logged in!"); }
+        if (!token){ next(new ExpressError("No user is logged in!", 402)); }
+        await redisClient.rPush('blacklisted_tokens', token);
+        res.status(200).send('User Logged Out Successfully!');
+    } catch (error){
+        // res.status(500).send(error.message);
+        next(new ExpressError(error.message, 500));
+    }
 }

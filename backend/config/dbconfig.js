@@ -7,7 +7,6 @@ const conn_params = {
     password : 'appAdmin123'
 };
 
-// const connection_string = 'mongodb://conn_params.host'+':'+conn_params.port+'/'+conn_params.db;
 // const connection_string = 'mongodb://'+conn_params.username+':'+conn_params.password+'@'+conn_params.host+':'+conn_params.port+'/'+conn_params.db;
 const connection_string = 'mongodb://mongo_db:27017/metatolldb';
 

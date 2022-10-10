@@ -3,10 +3,15 @@ const dbconfig = require('../config/dbconfig');
 require('../server');
 
 module.exports = async (req, res) => {
-	if (mongoose.connection.readyState === 1){
-		res.status(200).json({"Status":"DB is working"});
-	} else {
-		res.status(200).json({"Status":"Disconnected"});
+	try {
+		if (mongoose.connection.readyState === 1){
+			res.status(200).json({"Status":"DB is working"});
+		} else {
+			res.status(200).json({"Status":"Disconnected"});
+		}
+	} catch (error) {
+        // res.status(500).json({"Status":"Something went wrong!"});
+        next(new ExpressError(error.message, 500));
 	}
 };
 

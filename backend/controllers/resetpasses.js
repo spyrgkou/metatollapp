@@ -3,7 +3,7 @@ const User = require('../models/users');
 const csvtojson = require('csvtojson');
 const inputCSVDateCorrection = require('../helpers').inputCSVDateCorrection;
 
-module.exports = async (req, res) => {
+module.exports = async (req, res, next) => {
 	try {
         await User.deleteMany();
         await User.create({
@@ -64,6 +64,7 @@ module.exports = async (req, res) => {
         // }
         // res.status(200).json({"Status":"OK"});
     } catch (error) {
-        res.status(500).json({"Status":"Something went wrong!"});
+        // res.status(500).json({"Status":"Something went wrong!"});
+        next(new ExpressError(error.message, 500));
 	}
 };

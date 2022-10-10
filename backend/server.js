@@ -37,6 +37,11 @@ app.use(baseurl, AdminRouter);
 // app.use(checkAuth);
 app.use(baseurl, SearchRouter);
 
+app.use((err, req, res, next)=>{
+    const {statusCode = 500, message = 'Something went wrong'} = err;
+    res.status(statusCode).send(message);
+})
+
 app.use('*', (req, res) => res.status(404).json({"Message":"Bad Request"}));
 
 app.listen(9103, ()=>{
