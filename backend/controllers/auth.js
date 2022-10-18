@@ -2,8 +2,9 @@ const User = require('../models/users');
 const createToken = require('../helpers').createToken
 const jwt = require('jsonwebtoken');
 const redisClient = require('../config/redisConfig')
+const ExpressError = require('../errorHandler')
 
-module.exports.signup = async (req, res) => {
+module.exports.signup = async (req, res, next) => {
     const {username, password, role, name, abbrevation, email} = req.body;
     try{
         const user = await User.create({ username, password, role, name, abbrevation, email });
@@ -21,11 +22,11 @@ module.exports.signup = async (req, res) => {
     }
 }
 
-module.exports.login_get = (req, res) => {
+module.exports.login_get = (req, res, next) => {
     res.send('loginget');
 }
 
-module.exports.login_post = async (req, res) => {
+module.exports.login_post = async (req, res, next) => {
     const {username, password} = req.body;
 
     try {
@@ -46,11 +47,13 @@ module.exports.login_post = async (req, res) => {
     }
 }
 
-module.exports.logout = async (req, res) => {
+module.exports.logout = async (req, res, next) => {
     try{
         const token = req.header('X-OBSERVATORY-AUTH');
-        // if (!token){ res.status(402).send("No user is logged in!"); }
         if (!token){ next(new ExpressError("No user is logged in!", 402)); }
+        if (await redisClient.lPos('blacklisted_tokens',token)){
+            next(new ExpressError ('User with this token logged out. Log in again.', 401));
+        }
         await redisClient.rPush('blacklisted_tokens', token);
         res.status(200).send('User Logged Out Successfully!');
     } catch (error){

@@ -2,6 +2,7 @@ const Pass = require('../models/passes');
 const User = require('../models/users');
 const csvtojson = require('csvtojson');
 const inputCSVDateCorrection = require('../helpers').inputCSVDateCorrection;
+const ExpressError = require('../errorHandler')
 
 module.exports = async (req, res, next) => {
 	try {

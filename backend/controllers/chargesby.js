@@ -2,7 +2,7 @@ const Pass = require('../models/passes');
 const Station = require('../models/stations');
 const ISODateFromString = require('../helpers').ISODateFromString;
 
-module.exports = async (req, res) => {
+module.exports = async (req, res, next) => {
     try {
 		if (!(await Station.distinct('stationProvider')).includes(req.params.op_ID)){
 			// res.status(204).send("NO CONTENT");

@@ -1,0 +1,590 @@
+{
+	"info": {
+		"_postman_id": "48c87c15-c3e4-4a4f-9bf1-041c04a9b935",
+		"name": "Metatollapp - Mern Stack",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16910183"
+	},
+	"item": [
+		{
+			"name": "Home",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}",
+					"host": [
+						"{{baseurl}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Healthcheck",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}admin/healthcheck",
+					"host": [
+						"{{baseurl}}admin"
+					],
+					"path": [
+						"healthcheck"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Resetvehicles",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}admin/resetvehicles",
+					"host": [
+						"{{baseurl}}admin"
+					],
+					"path": [
+						"resetvehicles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Resetstations",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}admin/resetstations",
+					"host": [
+						"{{baseurl}}admin"
+					],
+					"path": [
+						"resetstations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Resetpasses",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}admin/resetpasses",
+					"host": [
+						"{{baseurl}}admin"
+					],
+					"path": [
+						"resetpasses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}login",
+					"host": [
+						"{{baseurl}}login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"freepasses4all\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}login",
+					"host": [
+						"{{baseurl}}login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Signup Fail",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-OBSERVATORY-AUTH",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseurl}}signup",
+					"host": [
+						"{{baseurl}}signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Signup",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-OBSERVATORY-AUTH",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseurl}}signup",
+					"host": [
+						"{{baseurl}}signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Passesperstation",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}passesperstation/:stationID/:date_from/:date_to",
+					"host": [
+						"{{baseurl}}passesperstation"
+					],
+					"path": [
+						":stationID",
+						":date_from",
+						":date_to"
+					],
+					"variable": [
+						{
+							"key": "stationID",
+							"value": ""
+						},
+						{
+							"key": "date_from",
+							"value": ""
+						},
+						{
+							"key": "date_to",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Passesanalysis",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}passesperanalysis/:op1_ID/:op2_ID/:date_from/:date_to",
+					"host": [
+						"{{baseurl}}passesperanalysis"
+					],
+					"path": [
+						":op1_ID",
+						":op2_ID",
+						":date_from",
+						":date_to"
+					],
+					"variable": [
+						{
+							"key": "op1_ID",
+							"value": ""
+						},
+						{
+							"key": "op2_ID",
+							"value": ""
+						},
+						{
+							"key": "date_from",
+							"value": ""
+						},
+						{
+							"key": "date_to",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Passescost",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-OBSERVATORY-AUTH",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJpZCI6IjYzNDQwMzA3ZDdmM2JmYWNhOGFhYTJkMSIsIm5hbWUiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiJ9LCJpYXQiOjE2NjU0MDcwODgsImV4cCI6MTY2NTQxMDY4OH0.wFa8rIPC-NEBrkedZ84lT0mkyZd3jwB4uDzaOIC-Rgo",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseurl}}PassesCost/:op1_ID/:op2_ID/:date_from/:date_to",
+					"host": [
+						"{{baseurl}}PassesCost"
+					],
+					"path": [
+						":op1_ID",
+						":op2_ID",
+						":date_from",
+						":date_to"
+					],
+					"variable": [
+						{
+							"key": "op1_ID",
+							"value": "aodos"
+						},
+						{
+							"key": "op2_ID",
+							"value": "moreas"
+						},
+						{
+							"key": "date_from",
+							"value": "20190101"
+						},
+						{
+							"key": "date_to",
+							"value": "20200101"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Chargesby",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}ChargesBy/:op_ID/:date_from/:date_to",
+					"host": [
+						"{{baseurl}}ChargesBy"
+					],
+					"path": [
+						":op_ID",
+						":date_from",
+						":date_to"
+					],
+					"variable": [
+						{
+							"key": "op_ID",
+							"value": ""
+						},
+						{
+							"key": "date_from",
+							"value": ""
+						},
+						{
+							"key": "date_to",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}logout",
+					"host": [
+						"{{baseurl}}logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout Logged Out User",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}logout",
+					"host": [
+						"{{baseurl}}logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Operator",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"freepasses4all\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}login",
+					"host": [
+						"{{baseurl}}login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Signup No Authorization",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-OBSERVATORY-AUTH",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseurl}}signup",
+					"host": [
+						"{{baseurl}}signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Passesperstation Operator",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-OBSERVATORY-AUTH",
+						"value": "{{opertoken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseurl}}passesperstation/:stationID/:date_from/:date_to",
+					"host": [
+						"{{baseurl}}passesperstation"
+					],
+					"path": [
+						":stationID",
+						":date_from",
+						":date_to"
+					],
+					"variable": [
+						{
+							"key": "stationID",
+							"value": "AO01"
+						},
+						{
+							"key": "date_from",
+							"value": "20190101"
+						},
+						{
+							"key": "date_to",
+							"value": "20200101"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Passesanalysis Operator",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-OBSERVATORY-AUTH",
+						"value": "{{opertoken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseurl}}passesperanalysis/:op1_ID/:op2_ID/:date_from/:date_to",
+					"host": [
+						"{{baseurl}}passesperanalysis"
+					],
+					"path": [
+						":op1_ID",
+						":op2_ID",
+						":date_from",
+						":date_to"
+					],
+					"variable": [
+						{
+							"key": "op1_ID",
+							"value": "aodos"
+						},
+						{
+							"key": "op2_ID",
+							"value": "moreas"
+						},
+						{
+							"key": "date_from",
+							"value": "20190101"
+						},
+						{
+							"key": "date_to",
+							"value": "20200101"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Passescost Operator",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-OBSERVATORY-AUTH",
+						"value": "{{opertoken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseurl}}PassesCost/:op1_ID/:op2_ID/:date_from/:date_to",
+					"host": [
+						"{{baseurl}}PassesCost"
+					],
+					"path": [
+						":op1_ID",
+						":op2_ID",
+						":date_from",
+						":date_to"
+					],
+					"variable": [
+						{
+							"key": "op1_ID",
+							"value": "aodos"
+						},
+						{
+							"key": "op2_ID",
+							"value": "moreas"
+						},
+						{
+							"key": "date_from",
+							"value": "20190101"
+						},
+						{
+							"key": "date_to",
+							"value": "20200101"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Chargesby Operator",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-OBSERVATORY-AUTH",
+						"value": "{{opertoken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseurl}}ChargesBy/:op_ID/:date_from/:date_to",
+					"host": [
+						"{{baseurl}}ChargesBy"
+					],
+					"path": [
+						":op_ID",
+						":date_from",
+						":date_to"
+					],
+					"variable": [
+						{
+							"key": "op_ID",
+							"value": "aodos"
+						},
+						{
+							"key": "date_from",
+							"value": "20190101"
+						},
+						{
+							"key": "date_to",
+							"value": "20200101"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseurl",
+			"value": "localhost:9103/interoperability/api/"
+		},
+		{
+			"key": "authtoken",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJpZCI6IjYzNGYwMGJmMWE5YzhhNzdlZDMwOWIyZiIsIm5hbWUiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiJ9LCJpYXQiOjE2NjYxMjIyMTksImV4cCI6MTY2NjEyNTgxOX0.qe8hePzEtSdNNvzkynNEvW4OkB67qa1mUTPHF3XbWrc",
+			"type": "string"
+		},
+		{
+			"key": "opertoken",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6eyJpZCI6IjYzNGYwMTg2MWE5YzhhNzdlZDMxMjk0ZiIsIm5hbWUiOiJhb2RvcyIsInJvbGUiOiJvcGVyYXRvciJ9LCJpYXQiOjE2NjYxMjIzNjUsImV4cCI6MTY2NjEyNTk2NX0.KhujaiwJe25jM5UbL4xn42eftoT21-OHF1xQ3Ii-OGo",
+			"type": "string"
+		}
+	]
+}

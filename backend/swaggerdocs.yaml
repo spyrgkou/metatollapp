@@ -1,0 +1,360 @@
+openapi: 3.0.0
+info:
+  title: Metatollapp API - OpenAPI 3.0
+  description: |-
+    MetatollappAPI
+  termsOfService: http://swagger.io/terms/
+  contact:
+    name: Gkourgkoutas Spyridon
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+servers:
+  - url: http://localhost:9103
+tags:
+  - name: Admin
+    description: Admin Actions
+  - name: Auth
+    description: Auth Actions
+  - name: Search
+    description: Search Actions
+paths:
+  /interoperability/api:
+    get:
+      tags:
+        - Admin
+      description: Home API api
+      responses:
+        "200":
+          description: "Success"
+        "500":
+          description: "Something went wrong"
+  /interoperability/api/admin/healthcheck:
+    get:
+      tags:
+        - Admin
+      description: Check database status
+      responses:
+        "200":
+          description: "Database Status"
+        "500":
+          description: "Something went wrong"
+  /interoperability/api/admin/resetpasses:
+    post:
+      tags:
+        - Admin
+      description: Reset passes collection and users collection - admin
+      responses:
+        "200":
+          description: "Database Status"
+        "500":
+          description: "Something went wrong"
+  /interoperability/api/admin/resetstations:
+    post:
+      tags:
+        - Admin
+      description: Reset stations collection
+      responses:
+        "200":
+          description: "Database Status"
+        "500":
+          description: "Something went wrong"
+  /interoperability/api/admin/resetvehicles:
+    post:
+      tags:
+        - Admin
+      description: Reset vehicles collection
+      responses:
+        "200":
+          description: "Database Status"
+        "500":
+          description: "Something went wrong"
+  /interoperability/api/login:
+    get:
+      tags:
+        - Auth
+      description: Login Get
+      responses:
+        "200":
+          description: "Database Status"
+        "500":
+          description: "Something went wrong"
+    post:
+      tags:
+        - Auth
+      description: Login post
+      requestBody:
+        description: Login user with credentials
+        content:
+          application/json:
+            schema:
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+        required: true
+      responses:
+        "200":
+          description: Signup user
+        "401":
+          description: No Authenticated
+        "402":
+          description: No Authorized
+        "500":
+          description: Something went wrong!
+  /interoperability/api/logout:
+    get:
+      tags:
+        - Auth
+      description: Logout get
+      parameters:
+        - in: header
+          name: X-OBSERVATORY-AUTH
+          schema:
+            type: string
+            example: JWT token
+          required: true
+      responses:
+        "200":
+          description: Logout User
+        "500":
+          description: Something went wrong!
+      security:
+        - api_key:
+  /interoperability/api/signup:
+    post:
+      tags:
+        - Auth
+      description: signup an operator
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+                name:
+                  type: string
+                role:
+                  type: string
+                abbrevation:
+                  type: string
+                email:
+                  type: string
+              required: true
+      parameters:
+        - in: header
+          name: X-OBSERVATORY-AUTH
+          schema:
+            type: string
+            example: JWT token
+          required: true
+      responses:
+        "200":
+          description: Login User
+        "400":
+          description: Wrong Password
+        "500":
+          description: Something went wrong!
+      security:
+        - api_key:
+  /interoperability/api/passesperstation/{stationID}/{date_from}/{date_to}:
+    get:
+      tags:
+        - Search
+      description: passesperstation for specific timeframe endpoint
+      parameters:
+        - in: path
+          name: stationID
+          required: true
+          schema:
+            type: string
+            example: AO01
+          description: The Station ID
+        - in: path
+          name: date_from
+          required: true
+          schema:
+            type: string
+            example: 20190101
+          description: Date from YYYYMMDD
+        - in: path
+          name: date_to
+          required: true
+          schema:
+            type: string
+            example: 20190301
+          description: Date to YYYYMMDD
+        - in: header
+          name: X-OBSERVATORY-AUTH
+          schema:
+            type: string
+            example: JWT token
+          required: true
+      responses:
+        "200":
+          description: Return passes from date_form to date_to
+        "204":
+          description: No Content
+        "401":
+          description: Not Authenticated
+        "500":
+          description: Something went wrong!
+      security:
+        - api_key:
+  /interoperability/api/passesperanalysis/{op1_ID}/{op2_ID}/{date_from}/{date_to}:
+    get:
+      tags:
+        - Search
+      description: Passes of vehicles with op2 tag from op1 stations for specific timeframe endpoint
+      parameters:
+        - in: path
+          name: op1_ID
+          required: true
+          schema:
+            type: string
+            example: aodos
+          description: Operator 1 ID
+        - in: path
+          name: op2_ID
+          required: true
+          schema:
+            type: string
+            example: moreas
+          description: Operator 2 ID
+        - in: path
+          name: date_from
+          required: true
+          schema:
+            type: string
+            example: 20190101
+          description: Date from YYYYMMDD
+        - in: path
+          name: date_to
+          required: true
+          schema:
+            type: string
+            example: 20190301
+          description: Date to YYYYMMDD
+        - in: header
+          name: X-OBSERVATORY-AUTH
+          schema:
+            type: string
+            example: JWT token
+          required: true
+      responses:
+        "200":
+          description: Return passes of vehicles with op2 tag from op1 stations from date_form to date_to
+        "204":
+          description: No Content
+        "401":
+          description: Not Authenticated
+        "500":
+          description: Something went wrong!
+      security:
+        - api_key:
+  /interoperability/api/passescost/{op1_ID}/{op2_ID}/{date_from}/{date_to}:
+    get:
+      tags:
+        - Search
+      description: Passes cost from op1_ID to op2_ID for specific timeframe endpoint
+      parameters:
+        - in: path
+          name: op1_ID
+          required: true
+          schema:
+            type: string
+            example: aodos
+          description: Operator 1 ID
+        - in: path
+          name: op2_ID
+          required: true
+          schema:
+            type: string
+            example: moreas
+          description: Operator 2 ID
+        - in: path
+          name: date_from
+          required: true
+          schema:
+            type: string
+            example: 20190101
+          description: Date from YYYYMMDD
+        - in: path
+          name: date_to
+          required: true
+          schema:
+            type: string
+            example: 20190301
+          description: Date to YYYYMMDD
+        - in: header
+          name: X-OBSERVATORY-AUTH
+          schema:
+            type: string
+            example: JWT token
+          required: true
+      responses:
+        "200":
+          description: Return passes cost for op1 to op2 from date_form to date_to
+        "204":
+          description: No Content
+        "401":
+          description: Not Authenticated
+        "500":
+          description: Something went wrong!
+      security:
+        - api_key:
+  /interoperability/api/chargesby/{op_ID}/{date_from}/{date_to}:
+    get:
+      tags:
+        - Search
+      description: Charges for the operator to the rest of the operators for specific timeframe endpoint
+      parameters:
+        - in: path
+          name: op_ID
+          required: true
+          schema:
+            type: string
+            example: aodos
+          description: Operator
+        - in: path
+          name: date_from
+          required: true
+          schema:
+            type: string
+            example: 20190101
+          description: Date from YYYYMMDD
+        - in: path
+          name: date_to
+          required: true
+          schema:
+            type: string
+            example: 20190301
+          description: Date to YYYYMMDD
+        - in: header
+          name: X-OBSERVATORY-AUTH
+          schema:
+            type: string
+            example: JWT token
+          required: true
+      responses:
+        "200":
+          description: Return charges of op to the other operators
+        "204":
+          description: No Content
+        "401":
+          description: Not Authenticated
+        "500":
+          description: Something went wrong!
+      security:
+        - api_key:
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: X-OBSERVATORY-AUTH
+      in: header

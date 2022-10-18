@@ -1,5 +1,6 @@
 const Pass = require('../models/passes');
 const ISODateFromString = require('../helpers').ISODateFromString;
+const ExpressError = require('../errorHandler')
 
 module.exports = async (req, res, next) => {
 	try {

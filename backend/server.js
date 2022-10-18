@@ -2,9 +2,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
 var bodyParser = require('body-parser');
-// const checkAuth = require('./middleware/checkauth');
+const swaggerJSDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 
-// var jsonParser = bodyParser.json();
+const baseurl="/interoperability/api";
 
 const AdminRouter = require('./routes/adminRoutes');
 const SearchRouter = require('./routes/searchRoutes');
@@ -15,8 +16,7 @@ app.use(bodyParser.json());
 // app.use(methodOverride('_method'));
 
 const dbconfig = require('./config/dbconfig');
-const checkauth = require('./middleware/checkauth');
-// const users = require('./models/user');
+// const checkauth = require('./middleware/checkauth');
 mongoose.connect(dbconfig);
 
 const db = mongoose.connection;
@@ -25,16 +25,41 @@ db.once("open",()=>{
     console.log("Database connected");
 });
 
-// app.use('*', () => {
-//     res.setHeader("X-OBSERVATORY-AUTH","TOKEN");
-// })
+const YAML = require('yamljs');
+const swaggerJsDocs = YAML.load('./swaggerdocs.yaml');
+app.use(baseurl+'/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJsDocs));
 
-const baseurl="/interoperability/api";
+// const swaggerOptions = {
+//     swaggerDefinition: {
+//         info: {
+//             title: "Metatollapp API",
+//             description: "Metatollapp API Information",
+//             contact: {
+//                 name: "Gkourgkoutas Spyridon"
+//             },
+//             servers: ["http://localhost:9103"]
+//         },
 
+//     },
+//     apis: ['server.js','./routes/adminRoutes.js','./routes/authRoutes.js','./routes/searchRoutes.js'],
+// }
+
+// const swaggerSpec = swaggerJSDoc(swaggerOptions);
+// app.use(baseurl+'/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// /**
+//  * @swagger
+//  * /interoperability/api:
+//  *  get:
+//  *      description: Home page request
+//  *      responses:
+//  *          '200':
+//  *              description: Success
+//  */
 app.get(baseurl, (req, res) => res.status(200).json({"Home": "Metatollapp"}));
+
 app.use(baseurl, AuthRouter);
 app.use(baseurl, AdminRouter);
-// app.use(checkAuth);
 app.use(baseurl, SearchRouter);
 
 app.use((err, req, res, next)=>{
@@ -45,5 +70,6 @@ app.use((err, req, res, next)=>{
 app.use('*', (req, res) => res.status(404).json({"Message":"Bad Request"}));
 
 app.listen(9103, ()=>{
-    console.log("'Serving on port 9103!")
-})
+    console.log("'Serving on port 9103!");
+    console.log("Docs available at http://localhost:9103/interoperability/api/api-docs/");
+});

@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 const dbconfig = require('../config/dbconfig');
 require('../server');
+const ExpressError = require('../errorHandler')
 
-module.exports = async (req, res) => {
+module.exports = async (req, res, next) => {
 	try {
 		if (mongoose.connection.readyState === 1){
 			res.status(200).json({"Status":"DB is working"});
