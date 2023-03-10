@@ -8,8 +8,8 @@ const permissionAuth = require('../middleware/permissionAuth');
 
 router.use(checkAuth);
 router.get('/passesperstation/:stationID/:date_from/:date_to', permissionAuth('admin','operator'), PassesPerStation);
-router.get('/passesperanalysis/:op1_ID/:op2_ID/:date_from/:date_to', permissionAuth('admin','operator'), PassesAnalysis);
+router.get('/passesanalysis/:op1_ID/:op2_ID/:date_from/:date_to', permissionAuth('admin','operator'), PassesAnalysis);
 router.get('/passescost/:op1_ID/:op2_ID/:date_from/:date_to', permissionAuth('admin','operator'), PassesCost);
-router.get('/ChargesBy/:op_ID/:date_from/:date_to', permissionAuth('admin','operator'), ChargesBy);
+router.get('/chargesby/:op_ID/:date_from/:date_to', permissionAuth('admin','operator'), ChargesBy);
 
 module.exports = router;

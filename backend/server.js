@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
 var bodyParser = require('body-parser');
+const cors = require("cors");
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
@@ -13,11 +14,16 @@ const AuthRouter = require('./routes/authRoutes');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cors());
 // app.use(methodOverride('_method'));
 
 const dbconfig = require('./config/dbconfig');
-// const checkauth = require('./middleware/checkauth');
 mongoose.connect(dbconfig);
+
+// const connection_string = 'mongodb://127.0.0.1:27017/metatolldb';
+// mongoose.connect(connection_string);
+
+// const checkauth = require('./middleware/checkauth');
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
@@ -29,35 +35,7 @@ const YAML = require('yamljs');
 const swaggerJsDocs = YAML.load('./swaggerdocs.yaml');
 app.use(baseurl+'/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJsDocs));
 
-// const swaggerOptions = {
-//     swaggerDefinition: {
-//         info: {
-//             title: "Metatollapp API",
-//             description: "Metatollapp API Information",
-//             contact: {
-//                 name: "Gkourgkoutas Spyridon"
-//             },
-//             servers: ["http://localhost:9103"]
-//         },
-
-//     },
-//     apis: ['server.js','./routes/adminRoutes.js','./routes/authRoutes.js','./routes/searchRoutes.js'],
-// }
-
-// const swaggerSpec = swaggerJSDoc(swaggerOptions);
-// app.use(baseurl+'/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
-// /**
-//  * @swagger
-//  * /interoperability/api:
-//  *  get:
-//  *      description: Home page request
-//  *      responses:
-//  *          '200':
-//  *              description: Success
-//  */
 app.get(baseurl, (req, res) => res.status(200).json({"Home": "Metatollapp"}));
-
 app.use(baseurl, AuthRouter);
 app.use(baseurl, AdminRouter);
 app.use(baseurl, SearchRouter);

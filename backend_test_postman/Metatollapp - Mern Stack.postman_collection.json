@@ -204,9 +204,9 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{baseurl}}passesperanalysis/:op1_ID/:op2_ID/:date_from/:date_to",
+					"raw": "{{baseurl}}passesanalysis/:op1_ID/:op2_ID/:date_from/:date_to",
 					"host": [
-						"{{baseurl}}passesperanalysis"
+						"{{baseurl}}passesanalysis"
 					],
 					"path": [
 						":op1_ID",
@@ -435,9 +435,9 @@
 					}
 				],
 				"url": {
-					"raw": "{{baseurl}}passesperanalysis/:op1_ID/:op2_ID/:date_from/:date_to",
+					"raw": "{{baseurl}}passesanalysis/:op1_ID/:op2_ID/:date_from/:date_to",
 					"host": [
-						"{{baseurl}}passesperanalysis"
+						"{{baseurl}}passesanalysis"
 					],
 					"path": [
 						":op1_ID",

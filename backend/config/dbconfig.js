@@ -1,6 +1,6 @@
 const conn_params = {
-    host : 'mongo_db',
-    // host : 'localhost',
+    // host : 'mongo_db',
+    host : '127.0.0.1',
     db : 'metatolldb',
     port : '27017',
     username : 'appAdmin',
