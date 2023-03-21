@@ -16,7 +16,7 @@ services:
       - redis
     environment:
       ME_CONFIG_MONGODB_URL: mongodb://mongo_db:27017/metatolldb
-      NAME: TOPG
+      NAME: SG
 
   mongo_db:
     image: mongo:latest
