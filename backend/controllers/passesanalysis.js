@@ -30,7 +30,6 @@ module.exports = async (req, res, next) => {
             });
         }
 	} catch (error) {
-        // res.status(500).json({"Status":error.message});
         next(new ExpressError(error.message, 500));
 	}
 };

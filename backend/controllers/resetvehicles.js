@@ -26,7 +26,6 @@ module.exports = async (req, res, next) => {
             });
         });
 	} catch (error) {
-        // res.status(500).json({"Status":"Something went wrong!"});
         next(new ExpressError(error.message, 500));
 	}
 };

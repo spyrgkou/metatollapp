@@ -5,7 +5,6 @@ const ISODateFromString = require('../helpers').ISODateFromString;
 module.exports = async (req, res, next) => {
     try {
 		if (!(await Station.distinct('stationProvider')).includes(req.params.op_ID)){
-			// res.status(204).send("NO CONTENT");
             next(new ExpressError("No content", 204));
 		} else {
 			res.status(200).json({
@@ -29,7 +28,6 @@ module.exports = async (req, res, next) => {
 			})
 		}
 	} catch (error) {
-        // res.status(500).json({"Status":"Something went wrong!"});
         next(new ExpressError(error.message, 500));
 	}
 };
