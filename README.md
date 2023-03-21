@@ -1,2 +1,10 @@
 # metatollapp
 This is a demo project based on the semester project of the course "Software Engineering" - NTUA ECE
+## Description
+This application was developed by Spyridon Gkourgkoutas as part of the semester project of the course "Software Engineering" - NTUA ECE. The scope of this project is to develop an information system that could handle the charges for the operators that operate toll stations. Data dummy were provided for the scope of this project and are fictional, and the project is public as a part of my portfolio.
+## Architecture
+The application is based in MERN stack (MongoDB, Express, React, Node). The requirements are thoroughly described in the requirements document. NodeJS was used to develop backend and the base url is http://localhost:9103/interoperability/api , and authentication via JWT token was utilised. Moreover a simple Redis server is used in order to store the blacklisted JWT tokens. MongoDB was used as the application's database, and the models used were based on the requirements of the project. There are test for the backend using postman in the file backend_test_postman. For testing and documentation purposes of the api, swagger docs were used and are available in http://localhost:9103/interoperability/api/api-docs/. A simple react one page application was developed as a user interface, for the operators, available in http://localhost:3000/. The whole application has been containerized using docker.
+## Installation
+First, Docker must be installed in your local machine or server. In the root folder of this project run the command:/
+$ docker-compose up --build /
+And all the necessary components will be installed and the components of the application will start. After the first installation, you have to call the resetstations, resetvehicles, resetpasses endpoinds using swaggerdocs, in order to insert the dummy data in the database and an admin user with admin as username and freepasses4all as password will be created.
